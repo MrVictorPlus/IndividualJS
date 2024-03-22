@@ -5,14 +5,17 @@ class TransactionAnalyzer {
         this.transactions = transactions;
     }
 
+    // Добавляет новую транзакцию в массив транзакций.
     addTransaction(transaction) {
         this.transactions.push(transaction);
     }
 
+    // Возвращает массив всех транзакций.
     getAllTransactions() {
         return this.transactions;
     }
 
+    // Возвращает массив уникальных типов транзакций.
     getUniqueTransactionTypes() {
         const types = new Set();
         this.transactions.forEach(transaction => {
@@ -21,12 +24,14 @@ class TransactionAnalyzer {
         return Array.from(types);
     }
 
+    // Вычисляет общую сумму всех транзакций.
     calculateTotalAmount() {
         return this.transactions.reduce((total, transaction) => {
             return total + parseFloat(transaction.transaction_amount);
         }, 0);
     }
 
+    // Вычисляет общую сумму транзакций за указанную дату.
     calculateTotalAmountByDate(year, month, day) {
         return this.transactions.reduce((total, transaction) => {
             const transactionDate = new Date(transaction.transaction_date);
@@ -41,10 +46,12 @@ class TransactionAnalyzer {
         }, 0);
     }
 
+    // Возвращает массив транзакций указанного типа.
     getTransactionsByType(type) {
         return this.transactions.filter(transaction => transaction.transaction_type === type);
     }
 
+    // Возвращает массив транзакций, проведенных в указанном диапазоне дат.
     getTransactionsInDateRange(startDate, endDate) {
         startDate = new Date(startDate);
         endDate = new Date(endDate);
@@ -54,15 +61,18 @@ class TransactionAnalyzer {
         });
     }
 
+    // Возвращает массив транзакций, совершенных с указанным торговым местом или компанией.
     getTransactionsByMerchant(merchantName) {
         return this.transactions.filter(transaction => transaction.merchant_name === merchantName);
     }
 
+    // Вычисляет среднее значение транзакций.
     calculateAverageTransactionAmount() {
         const totalAmount = this.calculateTotalAmount();
         return totalAmount / this.transactions.length;
     }
 
+    // Возвращает массив транзакций с суммой в заданном диапазоне.
     getTransactionsByAmountRange(minAmount, maxAmount) {
         return this.transactions.filter(transaction => {
             const amount = parseFloat(transaction.transaction_amount);
@@ -70,6 +80,7 @@ class TransactionAnalyzer {
         });
     }
 
+    // Вычисляет общую сумму дебетовых транзакций.
     calculateTotalDebitAmount() {
         return this.transactions.reduce((total, transaction) => {
             if (transaction.transaction_type === 'debit') {
@@ -79,6 +90,7 @@ class TransactionAnalyzer {
         }, 0);
     }
 
+    // Возвращает номер месяца, в котором было больше всего транзакций.
     findMostTransactionsMonth() {
         const months = new Array(12).fill(0);
         this.transactions.forEach(transaction => {
@@ -89,6 +101,7 @@ class TransactionAnalyzer {
         return months.indexOf(maxTransactions) + 1; // Adding 1 because months are zero-based
     }
 
+    // Возвращает номер месяца, в котором было больше всего дебетовых транзакций.
     findMostDebitTransactionMonth() {
         const debitTransactions = this.getTransactionsByType('debit');
         const months = new Array(12).fill(0);
@@ -100,6 +113,7 @@ class TransactionAnalyzer {
         return months.indexOf(maxTransactions) + 1; // Adding 1 because months are zero-based
     }
 
+    // Возвращает тип транзакций, которых больше всего.
     mostTransactionTypes() {
         const debitCount = this.getTransactionsByType('debit').length;
         const creditCount = this.getTransactionsByType('credit').length;
@@ -112,6 +126,7 @@ class TransactionAnalyzer {
         }
     }
 
+    // Возвращает массив транзакций, совершенных до указанной даты.
     getTransactionsBeforeDate(date) {
         date = new Date(date);
         return this.transactions.filter(transaction => {
@@ -119,10 +134,12 @@ class TransactionAnalyzer {
         });
     }
 
+    // Возвращает транзакцию по ее уникальному идентификатору.
     findTransactionById(id) {
         return this.transactions.find(transaction => transaction.transaction_id === id);
     }
 
+    // Возвращает массив описаний всех транзакций.
     mapTransactionDescriptions() {
         return this.transactions.map(transaction => transaction.transaction_description);
     }
@@ -134,18 +151,3 @@ const transactions = JSON.parse(rawData);
 
 // Creating TransactionAnalyzer instance
 const analyzer = new TransactionAnalyzer(transactions);
-
-// Example usage
-console.log("Unique Transaction Types:", analyzer.getUniqueTransactionTypes());
-console.log("Total Amount:", analyzer.calculateTotalAmount());
-console.log("Total Amount in January 2019:", analyzer.calculateTotalAmountByDate(2019, 1));
-console.log("Transactions in Date Range:", analyzer.getTransactionsInDateRange('2019-01-01', '2019-01-15'));
-console.log("Transactions by Merchant:", analyzer.getTransactionsByMerchant('SuperMart'));
-console.log("Average Transaction Amount:", analyzer.calculateAverageTransactionAmount());
-console.log("Total Debit Amount:", analyzer.calculateTotalDebitAmount());
-console.log("Most Transactions Month:", analyzer.findMostTransactionsMonth());
-console.log("Most Debit Transactions Month:", analyzer.findMostDebitTransactionMonth());
-console.log("Most Transaction Types:", analyzer.mostTransactionTypes());
-console.log("Transactions Before Date:", analyzer.getTransactionsBeforeDate('2019-01-10'));
-console.log("Transaction by ID:", analyzer.findTransactionById("1"));
-console.log("Mapped Transaction Descriptions:", analyzer.mapTransactionDescriptions());
