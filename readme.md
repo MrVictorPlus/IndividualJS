@@ -14,31 +14,54 @@ II.Описание индивидуальной работы
 III.Краткая документация к проекту
 Класс TransactionAnalyzer
 1.	Конструктор
+
 o	Принимает массив транзакций в качестве аргумента и инициализирует объект анализатора транзакций.
+
 2.	Методы
+
 o	addTransaction(transaction): Добавляет новую транзакцию в массив.
+
 o	getAllTransactions(): Возвращает массив всех транзакций.
+
 o	getUniqueTransactionTypes(): Возвращает массив уникальных типов транзакций.
+
 o	calculateTotalAmount(): Рассчитывает общую сумму всех транзакций.
+
 o	calculateTotalAmountByDate(year, month, day): Рассчитывает общую сумму транзакций за указанный год, месяц и/или день.
+
 o	getTransactionsByType(type): Возвращает массив транзакций указанного типа.
+
 o	getTransactionsInDateRange(startDate, endDate): Возвращает транзакции, проведенные в указанном диапазоне дат.
+
 o	getTransactionsByMerchant(merchantName): Возвращает транзакции с указанным торговым местом или компанией.
+
 o	calculateAverageTransactionAmount(): Возвращает среднее значение транзакций.
+
 o	getTransactionsByAmountRange(minAmount, maxAmount): Возвращает транзакции в заданном диапазоне суммы.
+
 o	calculateTotalDebitAmount(): Рассчитывает общую сумму дебетовых транзакций.
+
 o	findMostTransactionsMonth(): Возвращает месяц с наибольшим количеством транзакций.
+
 o	findMostDebitTransactionMonth(): Возвращает месяц с наибольшим количеством дебетовых транзакций.
+
 o	mostTransactionTypes(): Возвращает тип транзакций с наибольшим количеством.
+
 o	getTransactionsBeforeDate(date): Возвращает транзакции, совершенные до указанной даты.
+
 o	findTransactionById(id): Возвращает транзакцию по идентификатору.
+
 o	mapTransactionDescriptions(): Возвращает массив описаний транзакций.
 
 IV.Примеры использования проекта
 Пример использования класса TransactionAnalyzer:
+
 const analyzer = new TransactionAnalyzer(transactions);
+
 console.log("Unique Transaction Types:", analyzer.getUniqueTransactionTypes());
+
 console.log("Total Amount:", analyzer.calculateTotalAmount());
+
 console.log("Total Amount in January 2019:", analyzer.calculateTotalAmountByDate(2019, 1));
 
 V.Ответы на контрольные вопросы
